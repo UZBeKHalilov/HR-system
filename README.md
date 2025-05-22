@@ -59,9 +59,6 @@ I have forked and continued working on it for learning and further development p
 
 This project is licensed under the [MIT License](LICENSE).
 
----
-
-Made with 💻 by [UZBeKHalilov](https://github.com/UZBeKHalilov)
 
 ```
 
