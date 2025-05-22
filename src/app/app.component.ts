@@ -16,13 +16,13 @@ import { AuthService } from './Services/auth.service';
 })
 export class AppComponent implements OnInit {
   isAuthenticated: boolean = false;
-isAttendancePage: any;
-
+  isAttendancePage: boolean = false;
+  
   constructor(
     public sidebarService: SidebarService,
     private authService: AuthService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.authService.getUser().subscribe(user => {
@@ -30,8 +30,13 @@ isAttendancePage: any;
       const currentRoute = this.router.url; // Joriy URL ni olish
       if (!this.isAuthenticated) {
         // Agar login bo‘lmasa va joriy sahifa /home yoki /attendance emas bo‘lsa
-        if (currentRoute !== '/home' && currentRoute !== '/attendance') {
+        // if (currentRoute !== '/home' && currentRoute !== '/attendance') {
+
+        // }
+        if (currentRoute === '/attendance') {
+          this.isAttendancePage = true;
         }
+
         // /home yoki /attendance bo‘lsa, hech narsa qilmaymiz
       }
     });

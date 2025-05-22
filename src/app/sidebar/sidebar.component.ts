@@ -18,14 +18,15 @@ export class SidebarComponent implements OnInit, OnDestroy { // OnDestroy qo'shi
   private allMenuItems = [
     { label: 'My activity', path: '/my-activity', icon: 'person', count: 0 },
     { label: 'Employees', path: '/employees', icon: 'group', count: 0 },
-    { label: 'Job Application', path: '/jobAppication', icon: 'how_to_reg', count: 0 }, // Path tuzatildi
+    { label: 'Job Application', path: '/jobApplication', icon: 'how_to_reg', count: 0 }, // Path tuzatildi
     { label: 'Departments', path: '/departments', icon: 'apartment', count: 0 },
     { label: 'Payroll Report', path: '/payroll-report', icon: 'assignment_turned_in', count: 0 },
-    { label: 'Tasks', path: '/tasks', icon: 'assignment', count: 0  },
-    { label: 'Time', path: '/time', icon: 'access_time', count: 0 },
+    { label: 'Attendance', path: '/attendance', icon: 'event', count: 0 },
+    // { label: 'Tasks', path: '/tasks', icon: 'assignment', count: 0  },
+    // { label: 'Time', path: '/time', icon: 'access_time', count: 0 },
     { label: 'Calendar', path: '/calendar', icon: 'calendar_today', count: 0 },
-    { label: 'Reports', path: '/reports', icon: 'bar_chart', count: 0 },
-    { label: 'Settings', path: '/settings', icon: 'settings', count: 0 }
+    // { label: 'Reports', path: '/reports', icon: 'bar_chart', count: 0 },
+    // { label: 'Settings', path: '/settings', icon: 'settings', count: 0 }
   ];
 
   menuItems: { label: string; path: string; icon: string; count: number }[] = [];

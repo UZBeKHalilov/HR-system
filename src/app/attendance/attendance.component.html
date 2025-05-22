@@ -1,0 +1,54 @@
+<div class="attendance-container">
+  
+  <h2>Employee Attendance Scanner</h2>
+
+  <div class="current-datetime">
+    <p><strong>Current Date & Time:</strong> <span class="time-value">{{ currentDateTime }}</span></p>
+  </div>
+
+  <div class="scanner-container" [class.hidden]="scanComplete">
+    <ngx-scanner-qrcode #scanner [config]="{ fps: 30 }" [ngStyle]="{ width: '100%' }"
+      (event)="onScanSuccess($event)"></ngx-scanner-qrcode>
+    <div class="scanner-overlay">
+      <div class="scanner-frame"></div>
+      <p class="scanner-instruction">Position the QR code within the frame</p>
+    </div>
+  </div>
+
+
+  @if (scanComplete) {
+  <div class="result-container">
+    <div class="success-message">
+      <i class="check-icon">✓</i>
+      <p>{{ scanMessage }}</p>
+    </div>
+
+    @if (employeeId) {
+    <div class="employee-info">
+      <h3>Employee ID: {{ employeeId }}</h3>
+    </div>
+    }
+
+    <div class="action-buttons">
+      <button class="btn enter-btn" (click)="recordEntry()">
+        <i class="enter-icon">↩</i>
+        Enter
+      </button>
+      <button class="btn exit-btn" (click)="recordExit()">
+        <i class="exit-icon">↪</i>
+        Exit
+      </button>
+    </div>
+
+    <button class="btn reset-btn" (click)="resetScanner()">
+      Scan Another
+    </button>
+  </div>
+  }
+
+  @if (scanError) {
+  <div class="error-message">
+    <p>{{ scanError }}</p>
+  </div>
+  }
+</div>

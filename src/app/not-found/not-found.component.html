@@ -1,0 +1,57 @@
+<div
+    class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 px-4 py-12 sm:px-6 lg:px-8">
+    <div class="w-full max-w-md space-y-8 text-center">
+        <!-- 404 Number with animation -->
+        <div class="relative">
+            <h1 class="text-9xl font-extrabold text-gray-200 dark:text-gray-800 tracking-widest">
+                404
+            </h1>
+            <div class="absolute inset-0 flex items-center justify-center">
+                <h2
+                    class="text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-pink-500 animate-pulse">
+                    404
+                </h2>
+            </div>
+        </div>
+
+        <!-- Illustration -->
+        <div class="w-full flex justify-center my-8">
+            <div class="relative w-64 h-64">
+                <!-- Animated SVG illustration -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" class="w-full h-full">
+                    <circle cx="250" cy="250" r="200" fill="none" stroke="currentColor" stroke-width="20"
+                        class="text-purple-200 dark:text-purple-900" />
+                    <path d="M250,50 C350,150 350,350 250,450 C150,350 150,150 250,50 Z" fill="none"
+                        stroke="currentColor" stroke-width="10" class="text-purple-500 animate-pulse" />
+                    <circle cx="175" cy="175" r="25" fill="currentColor" class="text-pink-500" />
+                    <circle cx="325" cy="175" r="25" fill="currentColor" class="text-pink-500" />
+                    <path d="M175,300 Q250,350 325,300" fill="none" stroke="currentColor" stroke-width="10"
+                        class="text-purple-500" />
+                </svg>
+            </div>
+        </div>
+
+        <!-- Message -->
+        <div class="space-y-4">
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white">
+                Oops! Page not found
+            </h2>
+            <p class="text-gray-600 dark:text-gray-300">
+                The page you are looking for might have been removed, had its name changed, or is temporarily
+                unavailable.
+            </p>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+            <button (click)="navigateToHome()"
+                class="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-medium rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200">
+                Go Home
+            </button>
+            <button (click)="goBack()"
+                class="px-6 py-3 bg-white dark:bg-gray-700 text-gray-700 dark:text-white font-medium rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 border border-gray-200 dark:border-gray-600">
+                Go Back
+            </button>
+        </div>
+    </div>
+</div>

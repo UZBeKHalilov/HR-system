@@ -26,6 +26,13 @@ export class LoginComponent {
 
   constructor(private authService: AuthService, private router: Router) { }
 
+  ngOnInit() {
+    const isAuthenticated: boolean = this.authService.isAuthenticated();
+    if (isAuthenticated) {
+      this.router.navigate(['/my-activity']); // Agar foydalanuvchi allaqachon tizimga kirgan bo‘lsa, uni boshqa sahifaga yo‘naltiramiz
+    }
+  }
+
   onSubmit() {
     this.errorMessage = null; // Har bir yangi urinishda xato xabarini tozalash
     if (this.username && this.password) {

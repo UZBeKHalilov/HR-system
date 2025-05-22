@@ -1,6 +1,12 @@
 <div class="layout">
-  <app-header *ngIf="!isAttendancePage" ></app-header>
-  <app-sidebar *ngIf="isAuthenticated"></app-sidebar>
+
+  @if (!isAttendancePage) {
+    <app-header></app-header>
+  }
+  @if (isAuthenticated) {
+    <app-sidebar></app-sidebar>
+  }
+
   <div class="content" [ngClass]="{
     'content-collapsed': sidebarService.isCollapsed() && isAuthenticated,
     'content-collapsedHome': !isAuthenticated

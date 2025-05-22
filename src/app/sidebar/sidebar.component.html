@@ -7,14 +7,20 @@
     <!-- Header qismi -->
   </div>
   <ul class="menu-items">
-    <li *ngFor="let item of menuItems" [routerLink]="[item.path]" routerLinkActive="active">
+    @for (item of menuItems; track item) {
+      <li [routerLink]="[item.path]" routerLinkActive="active">
       <mat-icon>{{ item.icon }}</mat-icon>
-      <span *ngIf="!sidebarService.isCollapsed()">
+      @if (!sidebarService.isCollapsed()) {
+        <span>
         {{ item.label }}
-        <span *ngIf="item.label === 'Job Application' && item.count > 0" class="pending-count">
+        @if (item.label === 'Job Application' && item.count > 0) {
+          <span class="pending-count">
           {{ item.count }}
+          </span>
+        }
         </span>
-      </span>
-    </li>
+      }
+      </li>
+    }
   </ul>
 </div>

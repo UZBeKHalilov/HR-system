@@ -1,0 +1,254 @@
+.attendance-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  $color_1: white;
+  $font-family_1: 'Roboto Mono', monospace;
+
+  /* Beautiful styling for the date and time display */
+  @keyframes pulse {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0.8;
+    }
+  }
+
+  /* For smaller screens */
+  .current-datetime {
+    background: linear-gradient(135deg, #2193b0, #6dd5ed);
+    color: $color_1;
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin: 15px 0 25px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+      pointer-events: none;
+    }
+
+    p {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    strong {
+      margin-right: 10px;
+      font-weight: 600;
+    }
+
+    .time-value {
+      font-family: $font-family_1;
+      font-weight: 500;
+      animation: pulse 1s infinite alternate;
+      padding: 0 5px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .current-datetime {
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+
+
+}
+
+.scanner-container {
+  position: relative;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.scanner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.scanner-frame {
+  width: 200px;
+  height: 200px;
+  border: 2px solid #4CAF50;
+  border-radius: 10px;
+  box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.5);
+}
+
+.scanner-instruction {
+  margin-top: 20px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.success-message {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+
+  .check-icon {
+    background-color: #4CAF50;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    font-size: 18px;
+  }
+
+  p {
+    color: #4CAF50;
+    font-weight: 500;
+  }
+}
+
+.employee-info {
+  margin-bottom: 30px;
+  text-align: center;
+
+  h3 {
+    font-size: 24px;
+    color: #333;
+  }
+}
+
+.action-buttons {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    margin-right: 8px;
+    font-size: 18px;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.enter-btn {
+  background-color: #4CAF50;
+  color: white;
+  flex: 1;
+
+  &:hover {
+    background-color: #3d8b40;
+  }
+}
+
+.exit-btn {
+  background-color: #f44336;
+  color: white;
+  flex: 1;
+
+  &:hover {
+    background-color: #d32f2f;
+  }
+}
+
+.reset-btn {
+  background-color: #2196F3;
+  color: white;
+  width: 100%;
+  margin-top: 10px;
+
+  &:hover {
+    background-color: #1976D2;
+  }
+}
+
+.error-message {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #ffebee;
+  border-left: 4px solid #f44336;
+  border-radius: 4px;
+
+  p {
+    color: #d32f2f;
+    margin: 0;
+  }
+}
