@@ -1,0 +1,28 @@
+<header class="header">
+  <div class="logo">
+    <span>acme</span>
+    <span class="dot">.</span>
+  </div>
+  <div class="header-actions">
+    <mat-icon (click)="onSearch()">search</mat-icon>
+    <mat-icon (click)="onNotifications()">notifications</mat-icon>
+    <div class="user-profile" (click)="onProfileClick()">
+      <ng-container *ngIf="user; else loginTemplate">
+        <ng-container *ngIf="user.avatar; else defaultIcon">
+          <img [src]="user.avatar" alt="User Avatar" class="avatar" (error)="user.avatar = ''" />
+        </ng-container>
+        <ng-template #defaultIcon>
+          <mat-icon class="avatar-icon">account_circle</mat-icon>
+        </ng-template>
+        <div class="user-info">
+          <span class="user-name">{{ user.name }}</span>
+          <span class="user-role">{{ user.role }}</span>
+        </div>
+      </ng-container>
+      <ng-template #loginTemplate>
+        <mat-icon>login</mat-icon>
+        <span class="login-text">Login</span>
+      </ng-template>
+    </div>
+  </div>
+</header>

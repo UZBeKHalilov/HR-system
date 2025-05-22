@@ -1,0 +1,42 @@
+<div class="payroll-section">
+    <!-- Oy navigatsiyasi -->
+  <div class="calendar-controls">
+      <button mat-icon-button (click)="previousMonth()">
+          <mat-icon>chevron_left</mat-icon>
+      </button>
+      <span class="date-display">{{ getMonthName() }} {{ selectedYear }}</span>
+      <button mat-icon-button (click)="nextMonth()">
+          <mat-icon>chevron_right</mat-icon>
+      </button>
+  </div>
+
+  <!-- 3 ta yonma-yon box -->
+  <div class="stats-container">
+      <!-- Total Hours Worked -->
+      <mat-card class="stat-card hours-card">
+          <mat-card-content>
+              <h4>Total Hours Worked</h4>
+              <p>{{ payrollData ? formatHours(getTotalHours()) : '00:00:00' }}</p>
+          </mat-card-content>
+      </mat-card>
+
+      <!-- Total Amount -->
+      <mat-card class="stat-card amount-card">
+          <mat-card-content>
+              <h4>Total Amount</h4>
+              <p>{{ payrollData ? formatCurrency(getTotalAmount()) : '0.00 $' }}</p>
+          </mat-card-content>
+      </mat-card>
+
+      <!-- Balance -->
+      <mat-card class="stat-card balance-card">
+          <mat-card-content>
+              <h4>Balance</h4>
+              <p>{{ payrollData ? formatCurrency(payrollData.wallet) : '0.00 $' }}</p>
+          </mat-card-content>
+      </mat-card>
+  </div>
+
+  <!-- Agar ma'lumot yo‘q bo‘lsa -->
+  <p *ngIf="!payrollData">No payroll data available for this month.</p>
+</div>

@@ -1,0 +1,40 @@
+<div class="attendance-section">
+    <h3>Monthly Attendance</h3>
+    <div class="calendar-header-wrapper">
+        <div class="calendar-controls">
+            <button mat-icon-button (click)="previousMonth()">
+                <mat-icon>chevron_left</mat-icon>
+            </button>
+            <span class="date-display">{{ getMonthName() }} {{ selectedYear }}</span>
+            <button mat-icon-button (click)="nextMonth()">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="calendar">
+        <div class="calendar-header">
+            <span>Sun</span>
+            <span>Mon</span>
+            <span>Tue</span>
+            <span>Wed</span>
+            <span>Thu</span>
+            <span>Fri</span>
+            <span>Sat</span>
+        </div>
+        <div class="calendar-body">
+            <ng-container *ngFor="let day of getEmptyDays()">
+                <div class="calendar-day empty"></div>
+            </ng-container>
+            <div *ngFor="let day of calendarDays" class="calendar-day" [ngClass]="{
+                'present': day.status === 'present',
+                'absent': day.status === 'absent',
+                'ongoing': day.status === 'ongoing',
+                'past': day.status === 'past',
+                'future': day.status === 'future',
+                'off-day': day.status === 'off-day'
+            }" [matTooltip]="day.status === 'present' ? ('Worked: ' + day.workedHours) : null">
+                {{ day.day }}
+            </div>
+        </div>
+    </div>
+</div>

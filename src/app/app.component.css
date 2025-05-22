@@ -1,0 +1,21 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Butun ekran balandligini egallaydi */
+}
+
+.content {
+  margin-left: 250px; /* Sidebar kengligi */
+  margin-top: 60px; /* Header balandligi */
+  padding: 20px;
+  flex: 1; /* Kontent qolgan joyni to‘ldiradi */
+  transition: margin-left 0.3s ease; /* Sidebar holati o‘zgarganda silliq o‘tish */
+  box-sizing: border-box; /* Padding va margin’ni to‘g‘ri hisoblash uchun */
+}
+
+.content-collapsed {
+  margin-left: 60px; /* Sidebar yopilgan holatdagi kenglik */
+}
+.content-collapsedHome {
+  margin-left: 0; /* Sidebar yopilgan holatdagi kenglik */
+}

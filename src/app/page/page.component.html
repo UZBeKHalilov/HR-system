@@ -1,0 +1,54 @@
+<div class="page-content">
+    <mat-card>
+      <mat-card-title>{{ pageType | titlecase }}</mat-card-title>
+      <mat-card-content>
+        <ng-container [ngSwitch]="pageType">
+          <div *ngSwitchCase="'my-activity'">
+            <p>This is the My Activity page. Add your content here.</p>
+          </div>
+          <div *ngSwitchCase="'tasks'">
+            <p>This is the Tasks page. Add your content here.</p>
+          </div>
+          <div *ngSwitchCase="'time'">
+            <p>This is the Time page. Add your content here.</p>
+          </div>
+          <div *ngSwitchCase="'calendar'">
+            <p>This is the Calendar page. Add your content here.</p>
+          </div>
+          <div *ngSwitchCase="'directory'">
+            <p>This is the Directory page. Add your content here.</p>
+          </div>
+          <div *ngSwitchCase="'employee'">
+            <p>This is the Recruitment page. Add your content here.</p>
+          </div>
+          <div *ngSwitchCase="'performance'">
+            <p>This is the Performance page. Add your content here.</p>
+          </div>
+          <div *ngSwitchCase="'projects'">
+            <p>This is the Projects page. Add your content here.</p>
+          </div>
+          <div *ngSwitchCase="'surveys'">
+            <p>This is the Surveys page. Add your content here.</p>
+          </div>
+          <div *ngSwitchCase="'assets'">
+            <p>This is the Assets page. Add your content here.</p>
+          </div>
+          <div *ngSwitchCase="'knowledge-base'">
+            <p>This is the Knowledge Base page. Add your content here.</p>
+          </div>
+          <div *ngSwitchCase="'case-management'">
+            <p>This is the Case Management page. Add your content here.</p>
+          </div>
+          <div *ngSwitchCase="'reports'">
+            <p>This is the Reports page. Add your content here.</p>
+          </div>
+          <div *ngSwitchCase="'settings'">
+            <p>This is the Settings page. Add your content here.</p>
+          </div>
+          <div *ngSwitchDefault>
+            <p>Page not found.</p>
+          </div>
+        </ng-container>
+      </mat-card-content>
+    </mat-card>
+  </div>

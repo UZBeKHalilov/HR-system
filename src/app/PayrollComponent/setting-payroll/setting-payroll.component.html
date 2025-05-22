@@ -1,0 +1,98 @@
+<div class="setting-payroll-container">
+  <mat-card class="setting-card">
+    <mat-card-header>
+      <mat-card-title>Payroll Management</mat-card-title>
+      <mat-card-subtitle *ngIf="employeeId">Employee ID: {{ employeeId }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-tab-group>
+        <!-- Schedule Tab -->
+        <mat-tab label="Schedule">
+          <form (ngSubmit)="submitPayrollSettings()" #scheduleForm="ngForm">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Work Start Time</mat-label>
+              <input matInput type="time" [(ngModel)]="payrollSettings.workStartTime" name="workStartTime" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Work End Time</mat-label>
+              <input matInput type="time" [(ngModel)]="payrollSettings.workEndTime" name="workEndTime" required>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Work Days</mat-label>
+              <mat-select [(ngModel)]="selectedWorkDays" name="workDays" multiple required>
+                <mat-option *ngFor="let day of workDayOptions" [value]="day.value">{{ day.label }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Hourly Rate ($)</mat-label>
+              <input matInput type="number" step="0.01" [(ngModel)]="payrollSettings.hourlyRate" name="hourlyRate" required min="0">
+            </mat-form-field>
+            <mat-card-actions>
+              <button mat-raised-button color="primary" type="submit" [disabled]="!scheduleForm.valid">
+                Save Schedule
+              </button>
+            </mat-card-actions>
+          </form>
+        </mat-tab>
+
+        <!-- Pay Tab -->
+        <mat-tab label="Pay">
+          <form (ngSubmit)="submitPayment()" #payForm="ngForm">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Paid Amount ($)</mat-label>
+              <input matInput type="number" step="0.01" [(ngModel)]="payrollPayment.paidAmount" name="paidAmount" required min="0">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Month</mat-label>
+              <mat-select [(ngModel)]="payrollPayment.month" name="month" required>
+                <mat-option *ngFor="let month of months" [value]="month.value">{{ month.label }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Year</mat-label>
+              <input matInput type="number" [(ngModel)]="payrollPayment.year" name="year" required min="2000">
+            </mat-form-field>
+            <mat-card-actions>
+              <button mat-raised-button color="primary" type="submit" [disabled]="!payForm.valid">
+                Submit Payment
+              </button>
+            </mat-card-actions>
+          </form>
+        </mat-tab>
+
+        <!-- Paid Tab -->
+        <mat-tab label="Paid History">
+          <div class="paid-content">
+            <div class="controls">
+              <mat-form-field appearance="outline" class="control-field">
+                <mat-label>Month</mat-label>
+                <mat-select [(ngModel)]="selectedMonth" (selectionChange)="updateHistory()" name="historyMonth">
+                  <mat-option *ngFor="let month of months" [value]="month.value">{{ month.label }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="control-field">
+                <mat-label>Year</mat-label>
+                <input matInput type="number" [(ngModel)]="selectedYear" (change)="updateHistory()" name="historyYear" min="2000">
+              </mat-form-field>
+            </div>
+            <div class="total-paid" *ngIf="payrollHistory">
+              <p>Total Paid: {{ payrollHistory.totalPaidAmount | number:'1.2-2' }} $</p>
+            </div>
+            <div class="payments-list" *ngIf="payrollHistory && payrollHistory.payments.length > 0">
+              <mat-list>
+                <mat-list-item *ngFor="let payment of payrollHistory.payments">
+                  <div matListItemTitle>
+                    {{ payment.amount | number:'1.2-2' }} $ - {{ payment.paymentDate | date:'yyyy-MM-dd HH:mm:ss' }}
+                  </div>
+                  <div matListItemLine>{{ payment.description }}</div>
+                </mat-list-item>
+              </mat-list>
+            </div>
+            <p *ngIf="payrollHistory && payrollHistory.payments.length === 0">No payments found.</p>
+            <p *ngIf="!payrollHistory">Loading...</p>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,63 @@
+<div class="payroll-report-container">
+    <div class="header-section">
+      <h2>Payroll Report</h2>
+      <div class="filters">
+        <div class="compact-month-filter">
+          <span class="filter-icon">📅</span>
+          <select [(ngModel)]="selectedMonth" (change)="updateReport()" class="simple-select">
+            <option *ngFor="let month of months" [value]="month.value">{{ month.label }}</option>
+          </select>
+        </div>
+        <div class="compact-year-filter">
+          <span class="filter-icon">🗓️</span>
+          <select [(ngModel)]="selectedYear" (change)="updateReport()" class="simple-select">
+            <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+          </select>
+        </div>
+        <div class="compact-search">
+          <mat-icon class="search-icon">search</mat-icon>
+          <input (keyup)="applySearch($event)" placeholder="Search" class="search-input">
+        </div>
+      </div>
+    </div>
+  
+    <div class="error-message" *ngIf="errorMessage">
+      <span>⚠️</span>
+      <span>{{ errorMessage }}</span>
+    </div>
+  
+    <table class="modern-table" *ngIf="!errorMessage && dataSource.data.length > 0">
+      <thead>
+        <tr>
+          <th>Profile</th>
+          <th>Employee Name</th>
+          <th>Email</th>
+          <th>Total Hours Worked</th>
+          <th>Total Amount ($)</th>
+          <th>Wallet ($)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let employee of dataSource.data" (click)="viewEmployee(employee.employeeId)" class="table-row">
+          <td>
+            <ng-container *ngIf="employee.employeeAvatar; else defaultIcon">
+              <img [src]="getAvatarUrl(employee.employeeAvatar)" alt="Employee Avatar" class="avatar"
+                   (error)="employee.employeeAvatar = null" />
+            </ng-container>
+            <ng-template #defaultIcon>
+              <mat-icon class="avatar-icon">account_circle</mat-icon>
+            </ng-template>
+          </td>
+          <td>{{ getFullName(employee) }}</td>
+          <td>{{ employee.employeeEmail || 'N/A' }}</td>
+          <td>{{ employee.totalHoursWorked | number:'1.2-2' }}</td>
+          <td>{{ employee.totalAmount | number:'1.2-2' }}</td>
+          <td>{{ employee.wallet | number:'1.2-2' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div class="modern-paginator" *ngIf="!errorMessage && dataSource.data.length > 0">
+      <!-- Pagination qo‘lda qo‘shilishi mumkin -->
+    </div>
+  </div>

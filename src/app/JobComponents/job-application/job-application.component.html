@@ -1,0 +1,103 @@
+<div class="employee-container">
+  <div class="header-section">
+    <h2>Job Applications</h2>
+    <div class="filters">
+      <div class="compact-search">
+        <mat-icon class="search-icon">search</mat-icon>
+        <input (keyup)="applySearch($event)" placeholder="Search by Name" class="search-input">
+      </div>
+      <div class="compact-filter">
+        <mat-icon class="filter-icon">filter_list</mat-icon>
+        <select [(ngModel)]="selectedStatus" (change)="applyFilter()" class="filter-select">
+          <option value="">All</option>
+          <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="error-message" *ngIf="errorMessage">
+    <mat-icon>error_outline</mat-icon>
+    <span>{{ errorMessage }}</span>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-message">
+    <mat-icon>hourglass_empty</mat-icon>
+    <span>Loading...</span>
+  </div>
+
+  <table class="modern-table" *ngIf="!isLoading && !errorMessage && dataSource.data.length > 0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Applicant Name</th>
+        <th>Email</th>
+        <th>Route</th>
+        <th>Status</th>
+        <th>Applied At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let application of paginatedData" class="table-row" (click)="viewDetails(application)">
+        <td>{{ application.id }}</td>
+        <td>{{ getFullName(application) }}</td>
+        <td>
+          <a *ngIf="application.email" [href]="'mailto:' + application.email" class="email-link">
+            {{ application.email }}
+          </a>
+          <span *ngIf="!application.email">N/A</span>
+        </td>
+        <td>{{ application.route || 'N/A' }}</td>
+        <td>{{ application.status }}</td>
+        <td>{{ application.appliedAt | date:'yyyy-MM-dd HH:mm' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="modern-paginator" *ngIf="!errorMessage && dataSource.data.length > 0">
+    <mat-paginator [length]="dataSource.data.length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]"
+                   (page)="onPageChange($event)" showFirstLastButtons></mat-paginator>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" *ngIf="selectedApplication">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Application #{{ selectedApplication.id }}</h3>
+        <h4>Files</h4>
+        <button class="close-btn" (click)="closeDetails()">X</button>
+      </div>
+      <div class="modal-body">
+        <div class="details-section">
+          <p><strong>First Name:</strong> {{ selectedApplication.firstName || 'N/A' }}</p>
+          <p><strong>Last Name:</strong> {{ selectedApplication.lastName || 'N/A' }}</p>
+          <p><strong>Email:</strong> 
+            <a *ngIf="selectedApplication.email" [href]="'mailto:' + selectedApplication.email" class="email-link">
+              {{ selectedApplication.email }}
+            </a>
+            <span *ngIf="!selectedApplication.email">N/A</span>
+          </p>
+          <p><strong>Route:</strong> {{ selectedApplication.route || 'N/A' }}</p>
+          <p><strong>Status:</strong> {{ selectedApplication.status }}</p>
+          <p><strong>Applied Date:</strong> {{ selectedApplication.appliedAt | date:'yyyy-MM-dd HH:mm' }}</p>
+          <div class="modal-actions">
+            <button (click)="changeStatus(selectedApplication.id, 'Approved')">Approve</button>
+            <button (click)="changeStatus(selectedApplication.id, 'Rejected')">Reject</button>
+            <button (click)="deleteApplication(selectedApplication.id)">Delete</button>
+          </div>
+        </div>
+        <div class="files-section">
+          <ul class="file-list">
+            <li *ngFor="let file of selectedApplication.files" class="file-item">
+              <a (click)="downloadFile(file.filePath, file.fileName)" class="file-link">
+                <mat-icon class="file-icon">insert_drive_file</mat-icon>
+                {{ file.fileName }}
+              </a>
+            </li>
+            <li *ngIf="selectedApplication.files.length === 0">No Files</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

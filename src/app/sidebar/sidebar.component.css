@@ -1,0 +1,106 @@
+.sidebar {
+  width: 210px;
+  background-color: #f8f9fa;
+  height: 100vh;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: width 0.3s ease;
+  /* border-radius: 8px; */
+  position: fixed;
+  top: 60px;
+  left: 0px;
+  overflow-y: auto; /* Bu scrollbar paydo bo‘lishiga sabab bo‘ladi */
+  /* Scrollbar’ni yashirish uchun */
+  scrollbar-width: none; /* Firefox uchun */
+  -ms-overflow-style: none; /* Internet Explorer va Edge uchun */
+}
+
+/* Chrome, Safari va Opera uchun scrollbar’ni yashirish */
+.sidebar::-webkit-scrollbar {
+  display: none;
+}
+
+.sidebar.collapsed {
+  width: 60px;
+}
+
+/* Qolgan uslublar o‘zgarishsiz qoladi */
+.toggle-btn {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.menu-header {
+  font-size: 14px;
+  color: #6c757d;
+  margin-bottom: 20px;
+}
+
+.menu-items {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 60%;
+}
+
+.menu-items li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+.menu-items li:hover {
+  background-color: #e9ecef;
+}
+
+.menu-items li.active {
+  background-color: #e9ecef;
+}
+
+mat-icon {
+  margin-right: 10px;
+  color: #6c757d;
+}
+
+.sidebar.collapsed mat-icon {
+  margin-right: 0;
+}
+
+.sidebar.collapsed .menu-items li {
+  justify-content: center;
+}
+
+
+
+
+
+/* sidebar.component.css */
+.pending-count {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px; /* Dumaloqning kengligi */
+  height: 20px; /* Dumaloqning balandligi */
+  background-color: red; /* Qizil fon */
+  color: white; /* Oq rangli raqam */
+  border-radius: 50%; /* Dumaloq shakl */
+  font-size: 12px; /* Raqamning o‘lchami */
+  font-weight: bold;
+  margin-left: 8px; /* Matndan keyin bo‘shliq */
+}
+
+.menu-items li {
+  display: flex;
+  align-items: center;
+}
+
+.menu-items span {
+  display: flex;
+  align-items: center;
+}

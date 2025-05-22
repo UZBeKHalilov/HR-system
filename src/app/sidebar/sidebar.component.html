@@ -1,0 +1,20 @@
+<!-- sidebar.component.html -->
+<div class="sidebar" [ngClass]="{'collapsed': sidebarService.isCollapsed()}">
+  <div class="toggle-btn" (click)="toggleSidebar()">
+    <mat-icon>{{ sidebarService.isCollapsed() ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+  </div>
+  <div class="menu-header" *ngIf="!sidebarService.isCollapsed()">
+    <!-- Header qismi -->
+  </div>
+  <ul class="menu-items">
+    <li *ngFor="let item of menuItems" [routerLink]="[item.path]" routerLinkActive="active">
+      <mat-icon>{{ item.icon }}</mat-icon>
+      <span *ngIf="!sidebarService.isCollapsed()">
+        {{ item.label }}
+        <span *ngIf="item.label === 'Job Application' && item.count > 0" class="pending-count">
+          {{ item.count }}
+        </span>
+      </span>
+    </li>
+  </ul>
+</div>

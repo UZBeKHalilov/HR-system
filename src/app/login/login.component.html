@@ -1,0 +1,28 @@
+<div class="login-page-wrapper">
+  <div class="login-container">
+    <!-- Yopish tugmasi -->
+    <h2>Login</h2>
+    <form (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Username</mat-label>
+        <input matInput [(ngModel)]="username" name="username" required />
+        <mat-error *ngIf="!username">Username is required</mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" [(ngModel)]="password" name="password" required />
+        <mat-error *ngIf="!password">Password is required</mat-error>
+      </mat-form-field>
+  
+      <!-- Xato xabarini ko‘rsatish -->
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+  
+      <button mat-raised-button color="primary" type="submit" [disabled]="!username || !password">
+        Login
+      </button>
+    </form>
+  </div>
+</div>

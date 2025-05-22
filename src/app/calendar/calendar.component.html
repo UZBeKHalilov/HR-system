@@ -1,0 +1,27 @@
+<div class="calendar-container">
+    <div class="calendar-header">
+      <button mat-icon-button class="nav-button" (click)="previousMonth()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <h2 class="month-year">{{ getMonthName() }} {{ selectedYear }}</h2>
+      <button mat-icon-button class="nav-button" (click)="nextMonth()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  
+    <div class="calendar-grid">
+      <!-- Hafta kunlari -->
+      <div class="weekday" *ngFor="let day of weekdays">{{ day }}</div>
+  
+      <!-- Bo‘sh kunlar -->
+      <div class="empty-day" *ngFor="let empty of getEmptyDays()"></div>
+  
+      <!-- Oydagi kunlar -->
+      <div class="calendar-day" *ngFor="let day of calendarDays" [ngClass]="{
+        'current-day': isCurrentDay(day),
+        'weekend': isWeekend(day)
+      }">
+        <span>{{ day }}</span>
+      </div>
+    </div>
+  </div>

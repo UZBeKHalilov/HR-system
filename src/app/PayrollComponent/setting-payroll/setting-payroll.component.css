@@ -1,0 +1,84 @@
+.setting-payroll-container {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.setting-card {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+mat-card-title {
+  font-size: 1.5em;
+  color: #2c3e50;
+}
+
+mat-card-subtitle {
+  color: #7f8c8d;
+}
+
+mat-form-field {
+  margin-top: 20px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  font-size: 1.1em;
+}
+
+mat-tab-group {
+  margin-top: 20px;
+}
+
+.paid-content {
+  padding: 15px 0;
+}
+
+.paid-content .controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.paid-content .control-field {
+  flex: 1;
+}
+
+.total-paid p {
+  font-size: 1.1em;
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.payments-list {
+  max-height: 300px; /* Balandlik chegarasi saqlanadi */
+  overflow-y: auto; /* Skroll funksiyasi ishlaydi */
+  -webkit-overflow-scrolling: touch; /* Mobil qurilmalarda silliq skroll */
+}
+
+/* Skrollbar ko‘rinishini yashirish */
+.payments-list::-webkit-scrollbar {
+  width: 0; /* Webkit brauzerlarda skrollbar kengligini 0 qiladi */
+  background: transparent; /* Fon shaffof */
+}
+
+.payments-list {
+  -ms-overflow-style: none; /* Internet Explorer va Edge uchun */
+  scrollbar-width: none; /* Firefox uchun */
+}
+
+mat-list-item {
+  border-bottom: 1px solid #dadada;
+}

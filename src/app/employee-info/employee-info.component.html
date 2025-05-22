@@ -1,0 +1,148 @@
+<div class="my-activity-container">
+    <!-- Profile card -->
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="avatar-container">
+          <ng-container *ngIf="employeeDetails || employee; else defaultIcon">
+            <img *ngIf="employeeDetails?.profileImagePath || employee?.avatar || selectedFile; else defaultIcon"
+              [src]="selectedFile ? previewUrl : (employeeDetails?.profileImagePath || employee?.avatar)"
+              alt="Profile Image" class="avatar" (error)="onImageError()" />
+          </ng-container>
+          <ng-template #defaultIcon>
+            <mat-icon class="avatar-icon">account_circle</mat-icon>
+          </ng-template>
+          <ng-container *ngIf="isCurrentUser">
+            <mat-icon class="edit-icon" (click)="toggleEditMode()">edit</mat-icon>
+            <div class="edit-options" *ngIf="isEditMode">
+              <mat-icon class="action-icon" (click)="triggerFileInput()">cloud_upload</mat-icon>
+              <input type="file" #fileInput accept="image/*" (change)="onFileSelected($event)" style="display: none;" />
+              <mat-icon class="action-icon" *ngIf="employeeDetails?.profileImagePath || employee?.avatar"
+                (click)="deleteProfileImage()">delete</mat-icon>
+            </div>
+          </ng-container>
+        </div>
+        <div class="profile-info">
+          <h2>{{ getFullName() }}</h2>
+          <p>
+            <mat-icon>business</mat-icon> {{ employeeDetails?.role || 'N/A' }}
+            <mat-icon>location_on</mat-icon> {{ employeeDetails?.city || 'N/A' }}
+          </p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Tabs -->
+    <mat-tab-group class="tabs">
+      <mat-tab label="Personal">
+        <div class="tab-content">
+          <h3>Personal Information</h3>
+          <p><mat-icon>email</mat-icon> {{ employeeDetails?.email || 'N/A' }}</p>
+          <p><mat-icon>phone</mat-icon> {{ employeeDetails?.phoneNumber || 'N/A' }}</p>
+        </div>
+      </mat-tab>
+      <mat-tab label="Job">
+        <div class="tab-content">
+          <h3>Job Information</h3>
+          <p><strong>Hired on:</strong> {{ employeeDetails?.hireDate || 'N/A' }}</p>
+          <p><strong>Position:</strong> {{ employee?.role || 'N/A' }}</p>
+          <p><strong>Department:</strong> {{ employeeDetails?.departmentName || 'N/A' }}</p>
+        </div>
+      </mat-tab>
+      <mat-tab label="Time off">
+        <div class="time-off-section">
+          <mat-card class="time-off-card">
+            <mat-card-title>Annual Leave</mat-card-title>
+            <mat-card-content>
+              <h3>{{ timeOffStats.annualLeave }} days</h3>
+              <button mat-button color="primary" (click)="recordTimeOff('Annual Leave')">Record time off</button>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="time-off-card">
+            <mat-card-title>Sick Leave</mat-card-title>
+            <mat-card-content>
+              <h3>{{ timeOffStats.sickLeave }} days</h3>
+              <button mat-button color="primary" (click)="recordTimeOff('Sick Leave')">Record time off</button>
+            </mat-card-content>
+          </mat-card>
+          <mat-card class="time-off-card">
+            <mat-card-title>Without Pay</mat-card-title>
+            <mat-card-content>
+              <h3>{{ timeOffStats.withoutPay }} days</h3>
+              <button mat-button color="primary" (click)="recordTimeOff('Without Pay')">Record time off</button>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+      <mat-tab label="Payroll" *ngIf="employeeId">
+        <div class="tab-content">
+          <app-setting-payroll [employeeId]="employeeId"></app-setting-payroll>
+        </div>
+      </mat-tab>
+      <mat-tab label="Time">
+        <div class="tab-content">
+          <h3>Time Information</h3>
+          <p>Time data will be displayed here.</p>
+        </div>
+      </mat-tab>
+      <mat-tab label="Documents">
+        <div class="tab-content">
+          <h3>Documents</h3>
+          <p>Documents will be displayed here.</p>
+        </div>
+      </mat-tab>
+      <mat-tab label="Tasks">
+        <div class="tab-content">
+          <h3>Tasks</h3>
+          <p>Tasks will be displayed here.</p>
+        </div>
+      </mat-tab>
+      <mat-tab label="More">
+        <div class="tab-content">
+          <h3>More Information</h3>
+          <p>Additional information will be displayed here.</p>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  
+    <!-- Kalendar bo‘limi -->
+    <div class="attendance-section">
+      <app-attendance-info [employeeId]="employeeId" [selectedYear]="selectedYear"
+        [selectedMonth]="selectedMonth"></app-attendance-info>
+    </div>
+  
+    <!-- Payroll ma’lumotlari -->
+    <div class="payroll-section">
+      <h3>Payroll</h3>
+      <app-get-payroll [employeeId]="employeeId"></app-get-payroll>
+    </div>
+  
+  
+    <!-- Requests bo‘limi -->
+    <div class="requests-section">
+      <h3>Requests</h3>
+      <p class="requests-count">Displaying 1 - {{ requests.length }} of {{ requests.length }} in total</p>
+      <mat-list>
+        <mat-list-item *ngFor="let request of requests">
+          <mat-icon matListItemIcon>flight</mat-icon>
+          <div matListItemTitle>{{ request.leaveType }}</div>
+          <div matListItemLine>{{ request.dateRange }}</div>
+          <div matListItemLine>{{ request.amount }}</div>
+          <mat-chip-listbox>
+            <mat-chip [color]="request.status === 'Approved' ? 'primary' : 'warn'" selected>
+              {{ request.status }}
+            </mat-chip>
+          </mat-chip-listbox>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  
+    <!-- Qo‘shimcha ma’lumotlar -->
+    <div class="additional-info">
+      <h3>Contact Information</h3>
+      <p><mat-icon>email</mat-icon> {{ employeeDetails?.email || 'N/A' }}</p>
+      <p><mat-icon>phone</mat-icon> {{ employeeDetails?.phoneNumber || 'N/A' }}</p>
+      <p><strong>Hired on:</strong> {{ employeeDetails?.hireDate || 'N/A' }}</p>
+      <p><strong>Position:</strong> {{ employee?.role || 'N/A' }}</p>
+      <p><strong>Department:</strong> {{ employeeDetails?.departmentName || 'N/A' }}</p>
+    </div>
+  </div>

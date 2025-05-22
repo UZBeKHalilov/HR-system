@@ -1,0 +1,147 @@
+<div class="employee-container">
+  <div class="header-section">
+    <h2>Employees</h2>
+    <div class="filters">
+      <div class="compact-search">
+        <mat-icon class="search-icon">search</mat-icon>
+        <input (keyup)="applySearch($event)" placeholder="Search" class="search-input">
+      </div>
+      <div class="compact-filter">
+        <mat-icon class="filter-icon">filter_list</mat-icon>
+        <select [(ngModel)]="selectedRole" (change)="applyFilter()" class="filter-select">
+          <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+        </select>
+      </div>
+      <button class="add-button" (click)="openAddEmployeeModal()">
+        <mat-icon class="add-icon">add</mat-icon> Add Employee
+      </button>
+    </div>
+  </div>
+
+  <div class="error-message" *ngIf="errorMessage">
+    <mat-icon>error_outline</mat-icon>
+    <span>{{ errorMessage }}</span>
+  </div>
+
+  <table class="modern-table" *ngIf="!errorMessage && dataSource.data.length > 0">
+    <thead>
+      <tr>
+        <th>Profile</th>
+        <th>Candidate Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>City</th>
+        <th>Department</th>
+        <th>Position</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of paginatedData" class="table-row" (click)="viewEmployee(employee.employeeId)">
+        <td>
+          <ng-container *ngIf="employee.profileImagePath; else defaultIcon">
+            <img [src]="employee.profileImagePath" alt="Profile Image" class="avatar"
+                 (error)="employee.profileImagePath = null" />
+          </ng-container>
+          <ng-template #defaultIcon>
+            <mat-icon class="avatar-icon">account_circle</mat-icon>
+          </ng-template>
+        </td>
+        <td>{{ getFullName(employee) }}</td>
+        <td>{{ employee.email || 'N/A' }}</td>
+        <td>{{ employee.phoneNumber || 'N/A' }}</td>
+        <td>{{ employee.city || 'N/A' }}</td>
+        <td>{{ employee.departmentName || 'N/A' }}</td>
+        <td>{{ employee.position || 'N/A' }}</td>
+        <td>{{ employee.role || 'N/A' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="modern-paginator" *ngIf="!errorMessage && dataSource.data.length > 0">
+    <mat-paginator [length]="dataSource.data.length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 20]"
+                   (page)="onPageChange($event)" showFirstLastButtons></mat-paginator>
+  </div>
+
+  <!-- Modal oynasi -->
+  <div class="modal" *ngIf="showModal">
+    <div class="modal-content">
+      <h3>Add New Employee</h3>
+      <form (ngSubmit)="addEmployee()" #employeeForm="ngForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Username</label>
+            <input [(ngModel)]="newEmployee.userName" name="userName" required class="form-input"
+              placeholder="Enter username">
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input [(ngModel)]="newEmployee.password" name="password" type="password" required class="form-input"
+              placeholder="Enter password">
+          </div>
+          <div class="form-group">
+            <label>First Name</label>
+            <input [(ngModel)]="newEmployee.firstName" name="firstName" required class="form-input"
+              placeholder="Enter first name">
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input [(ngModel)]="newEmployee.lastName" name="lastName" required class="form-input"
+              placeholder="Enter last name">
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input [(ngModel)]="newEmployee.email" name="email" type="email" required class="form-input"
+              placeholder="Enter email">
+          </div>
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input [(ngModel)]="newEmployee.phoneNumber" name="phoneNumber" required class="form-input"
+              placeholder="Enter phone number">
+          </div>
+          <div class="form-group">
+            <label>Job Title</label>
+            <input [(ngModel)]="newEmployee.jobTitle" name="jobTitle" required class="form-input"
+              placeholder="Enter job title">
+          </div>
+          <div class="form-group">
+            <label>Position</label>
+            <input [(ngModel)]="newEmployee.position" name="position" required class="form-input"
+              placeholder="Enter position">
+          </div>
+          <div class="form-group">
+            <label>Date of Birth</label>
+            <input [(ngModel)]="newEmployee.dateOfBirth" name="dateOfBirth" type="date" required class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Hire Date</label>
+            <input [(ngModel)]="newEmployee.hireDate" name="hireDate" type="date" required class="form-input">
+          </div>
+          <div class="form-group">
+            <label>City</label>
+            <select [(ngModel)]="newEmployee.city" name="city" required class="form-select">
+              <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Department</label>
+            <select [(ngModel)]="newEmployee.departmentId" name="departmentId" required class="form-select">
+              <option *ngFor="let dept of departments" [value]="dept.departmentId">{{ dept.departmentName }}</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Role</label>
+            <select [(ngModel)]="newEmployee.role" name="role" required class="form-select">
+              <option value="Employee">Employee</option>
+              <option value="Admin">Admin</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="cancel-button" (click)="closeModal()">Cancel</button>
+          <button type="submit" class="submit-button" [disabled]="!employeeForm.valid">Add Employee</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

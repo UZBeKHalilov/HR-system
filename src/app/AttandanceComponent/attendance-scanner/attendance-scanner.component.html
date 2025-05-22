@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="scanner-container">
+    <h2 class="title">Employee Attendance Scanner</h2>
+    <p class="clock">20:39</p> <!-- async pipe bilan soat -->
+
+    <div class="initial" *ngIf="!showScanner">
+      <button class="scanner-btn" (click)="openScanner()">Start Camera</button>
+    </div>
+
+    <div class="scanner-content" *ngIf="showScanner">
+      <div class="scanner-wrapper" *ngIf="isScanning">
+        <zxing-scanner [formats]="allowedFormats" (scanSuccess)="onCodeResult($event)" [enable]="isScanning"
+          class="camera-feed"></zxing-scanner>
+        <div class="face-frame"></div>
+      </div>
+
+      <div class="result" *ngIf="scanResult && !isScanning">
+        <p *ngIf="employeeFullName">Xodim: <strong>{{ employeeFullName }}</strong></p>
+        <p *ngIf="!employeeFullName && message" class="message error">{{ message }}</p>
+
+        <div class="actions" *ngIf="employeeFullName && !message">
+          <button class="entry-btn" (click)="submitAttendance('entry')">Entry</button>
+          <button class="exit-btn" (click)="submitAttendance('exit')">Exit</button>
+        </div>
+
+        <p class="message" [ngClass]="{'success': messageType === 'success', 'error': messageType === 'error'}"
+          *ngIf="message">
+          {{ message }}
+        </p>
+
+      </div>
+    </div>
+  </div>
+</div>

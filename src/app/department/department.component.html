@@ -1,0 +1,64 @@
+<div class="department-container">
+  <div class="header-section">
+    <h2>Departments</h2>
+    <div class="filters">
+      <div class="compact-add-department">
+        <mat-icon class="add-icon">add</mat-icon>
+        <input 
+          [(ngModel)]="newDepartment" 
+          placeholder="Yangi bo‘lim qo‘shish" 
+          class="add-input"
+          (keyup.enter)="createDepartment()">
+        <span class="add-action-icon" (click)="createDepartment()">✔️</span>
+      </div>
+    </div>
+  </div>
+
+  <table class="modern-table" *ngIf="dataSource.data.length > 0">
+    <thead>
+      <tr>
+        <th>Bo‘lim nomi</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let dept of dataSource.data" class="table-row">
+        <td>
+          <span *ngIf="!isEditing(dept.departmentId)">
+            {{ dept.departmentName }}
+          </span>
+          <div class="edit-field" *ngIf="isEditing(dept.departmentId)">
+            <input 
+              [(ngModel)]="selectedDepartment.departmentName" 
+              class="edit-input"
+              (keyup.enter)="updateDepartment()">
+            <span class="save-icon" (click)="updateDepartment()">💾</span>
+            <span class="cancel-icon" (click)="cancelEdit()">❌</span>
+          </div>
+        </td>
+        <td>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="editDepartment(dept)">
+              <mat-icon>edit</mat-icon>
+              <span>Tahrirlash</span>
+            </button>
+            <button mat-menu-item (click)="deleteDepartment(dept.departmentId)">
+              <mat-icon>delete</mat-icon>
+              <span>O‘chirish</span>
+            </button>
+          </mat-menu>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- <mat-paginator 
+      [pageSizeOptions]="[5, 10, 20]" 
+      [pageSize]="5" 
+      showFirstLastButtons 
+      class="modern-paginator">
+    </mat-paginator> -->
+</div>

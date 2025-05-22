@@ -1,0 +1,71 @@
+<div class="container">
+    <div class="company-header">
+      <h1>Acme Corporation Careers</h1>
+      <p>Join our innovative team and grow your career with industry leaders. We're looking for talented individuals to help shape the future of our company.</p>
+    </div>
+  
+    <div class="application-card">
+      <h2>Job Application</h2>
+      
+      <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="Enter your first name">
+          </div>
+          
+          <div class="form-group col-md-6">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Enter your last name">
+          </div>
+        </div>
+  
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address</label>
+          <input type="email" class="form-control" id="email" formControlName="email" placeholder="your.email@example.com">
+        </div>
+  
+        <div class="form-group">
+          <label for="route" class="form-label">Position</label>
+          <select class="form-control" id="route" formControlName="route">
+            <option value="" disabled selected>Select a position</option>
+            <option value="Manager">Manager</option>
+            <option value="Developer">Developer</option>
+            <option value="Designer">Designer</option>
+            <option value="HR Specialist">HR Specialist</option>
+          </select>
+        </div>
+  
+        <div class="form-group">
+          <label class="form-label">Resume & Documents</label>
+          <div class="file-upload-container">
+            <label class="file-upload-label">
+              <i class="fas fa-cloud-upload-alt"></i> Click to upload or drag and drop
+              <input type="file" class="file-upload-input" multiple (change)="onFileChange($event)" #fileInput>
+            </label>
+            <small class="text-muted">PDF, DOC or DOCX files only (Max 5 files)</small>
+            
+            <div class="file-list" *ngIf="files.length > 0">
+              <div *ngFor="let file of files; let i = index" class="file-item">
+                <span class="file-name">{{ file.name }}</span>
+                <button type="button" class="remove-file-btn" (click)="removeFile(i)">
+                  &times;
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <button type="submit" class="submit-btn" [disabled]="!applicationForm.valid || files.length === 0 || isSubmitting">
+          <span *ngIf="!isSubmitting">Submit Application</span>
+          <span *ngIf="isSubmitting">
+            <span class="loading-spinner"></span> Processing...
+          </span>
+        </button>
+  
+        <div *ngIf="responseMessage" class="alert" [ngClass]="isSuccess ? 'alert-success' : 'alert-error'">
+          {{ responseMessage }}
+        </div>
+      </form>
+    </div>
+  </div>
